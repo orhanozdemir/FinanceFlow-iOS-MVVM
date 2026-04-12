@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TransactionFilter: String, CaseIterable {
+enum TransactionFilter: String, CaseIterable, Equatable {
     case all
     case income
     case expense

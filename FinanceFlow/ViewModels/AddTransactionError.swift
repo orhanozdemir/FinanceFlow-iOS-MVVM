@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AddTransactionError: LocalizedError {
+enum AddTransactionError: LocalizedError, Equatable {
     case emptyTitle
     case invalidAmount
     case invalidCategory

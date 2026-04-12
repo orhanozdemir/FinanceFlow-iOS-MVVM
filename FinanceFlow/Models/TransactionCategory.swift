@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TransactionCategory: String, Codable, CaseIterable {
+enum TransactionCategory: String, Codable, CaseIterable, Equatable {
     case salary
     case freelance
     case gift

@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		8FAD1C082F8BAD6E00163F61 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F0C9EF92F89B9EC0039D8CB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F0C9F002F89B9EC0039D8CB;
+			remoteInfo = FinanceFlow;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		8F0C9F012F89B9EC0039D8CB /* FinanceFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinanceFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FAD1C042F8BAD6E00163F61 /* FinanceFlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinanceFlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = FinanceFlow;
 			sourceTree = "<group>";
 		};
+		8FAD1C052F8BAD6E00163F61 /* FinanceFlowTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FinanceFlowTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		8F0C9EFE2F89B9EC0039D8CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8FAD1C012F8BAD6E00163F61 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				8F0C9F032F89B9EC0039D8CB /* FinanceFlow */,
+				8FAD1C052F8BAD6E00163F61 /* FinanceFlowTests */,
 				8F0C9F022F89B9EC0039D8CB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				8F0C9F012F89B9EC0039D8CB /* FinanceFlow.app */,
+				8FAD1C042F8BAD6E00163F61 /* FinanceFlowTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = 8F0C9F012F89B9EC0039D8CB /* FinanceFlow.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8FAD1C032F8BAD6E00163F61 /* FinanceFlowTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8FAD1C0C2F8BAD6E00163F61 /* Build configuration list for PBXNativeTarget "FinanceFlowTests" */;
+			buildPhases = (
+				8FAD1C002F8BAD6E00163F61 /* Sources */,
+				8FAD1C012F8BAD6E00163F61 /* Frameworks */,
+				8FAD1C022F8BAD6E00163F61 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8FAD1C092F8BAD6E00163F61 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				8FAD1C052F8BAD6E00163F61 /* FinanceFlowTests */,
+			);
+			name = FinanceFlowTests;
+			packageProductDependencies = (
+			);
+			productName = FinanceFlowTests;
+			productReference = 8FAD1C042F8BAD6E00163F61 /* FinanceFlowTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					8F0C9F002F89B9EC0039D8CB = {
 						CreatedOnToolsVersion = 26.4;
+					};
+					8FAD1C032F8BAD6E00163F61 = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = 8F0C9F002F89B9EC0039D8CB;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				8F0C9F002F89B9EC0039D8CB /* FinanceFlow */,
+				8FAD1C032F8BAD6E00163F61 /* FinanceFlowTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8F0C9EFF2F89B9EC0039D8CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8FAD1C022F8BAD6E00163F61 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8FAD1C002F8BAD6E00163F61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8FAD1C092F8BAD6E00163F61 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F0C9F002F89B9EC0039D8CB /* FinanceFlow */;
+			targetProxy = 8FAD1C082F8BAD6E00163F61 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8F0C9F0C2F89B9EE0039D8CB /* Debug */ = {
@@ -310,6 +385,48 @@
 			};
 			name = Release;
 		};
+		8FAD1C0A2F8BAD6E00163F61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9786T4DNT8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.procsin.FinanceFlowTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FinanceFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FinanceFlow";
+			};
+			name = Debug;
+		};
+		8FAD1C0B2F8BAD6E00163F61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9786T4DNT8;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.procsin.FinanceFlowTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FinanceFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FinanceFlow";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -327,6 +444,15 @@
 			buildConfigurations = (
 				8F0C9F0F2F89B9EE0039D8CB /* Debug */,
 				8F0C9F102F89B9EE0039D8CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8FAD1C0C2F8BAD6E00163F61 /* Build configuration list for PBXNativeTarget "FinanceFlowTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8FAD1C0A2F8BAD6E00163F61 /* Debug */,
+				8FAD1C0B2F8BAD6E00163F61 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

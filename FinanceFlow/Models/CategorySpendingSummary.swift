@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CategorySpendingSummary: Identifiable {
+struct CategorySpendingSummary: Identifiable, Equatable {
     let id = UUID()
     let category: TransactionCategory
     let totalAmount: Double
