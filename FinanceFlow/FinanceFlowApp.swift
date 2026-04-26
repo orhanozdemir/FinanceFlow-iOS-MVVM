@@ -15,6 +15,6 @@ struct FinanceFlowApp: App {
         WindowGroup {
             MainTabView()
         }
-        .modelContainer(for: Transaction.self)
+        .modelContainer(for: [Transaction.self, Budget.self])
     }
 }

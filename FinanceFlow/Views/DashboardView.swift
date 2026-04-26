@@ -12,6 +12,13 @@ struct DashboardView: View {
     @Query(sort: \Transaction.date, order: .reverse)
     private var transactions: [Transaction]
     
+    @Query(sort: \Budget.monthDate, order: .reverse)
+    private var budgets: [Budget]
+    
+    private var exceededBudgetStatuses: [BudgetStatus] {
+        viewModel.exceededBudgets(budgets: budgets, transactions: transactions)
+    }
+    
     private let viewModel = DashboardViewModel()
     
     var body: some View {
@@ -22,6 +29,7 @@ struct DashboardView: View {
                     monthlySummarySection
                     recentTransactionsSection
                     categorySpendingSection
+                    budgetWarningSection
                 }
                 .padding()
             }
@@ -110,9 +118,37 @@ struct DashboardView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
     
+    private var budgetWarningSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Bütçe Uyarıları")
+                .font(.headline)
+            
+            if exceededBudgetStatuses.isEmpty {
+                emptySectionText("Bu ay aşılmış bütçe yok.")
+            } else {
+                ForEach(exceededBudgetStatuses) { status in
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(status.budget.category.displayName)
+                            .font(.subheadline.bold())
+                        
+                        Text("Limit: ₺\(status.budget.monthlyLimit, specifier: "%.2f") • Harcanan: ₺\(status.spentAmount, specifier: "%.2f")")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.vertical, 4)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(.thinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+    }
+    
     private func emptySectionText(_ text: String) -> some View {
         Text(text)
             .font(.subheadline)
             .foregroundStyle(.secondary)
     }
 }
+

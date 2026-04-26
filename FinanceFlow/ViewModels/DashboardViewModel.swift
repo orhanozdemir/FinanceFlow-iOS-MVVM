@@ -52,4 +52,15 @@ final class DashboardViewModel {
             calendar.isDate(transaction.date, equalTo: Date(), toGranularity: .month)
         }
     }
+    
+    func exceededBudgets(
+        budgets: [Budget],
+        transactions: [Transaction]
+    ) -> [BudgetStatus] {
+        let budgetViewModel = BudgetListViewModel()
+        
+        return budgetViewModel
+            .statuses(from: budgets, transactions: transactions)
+            .filter { $0.isExceeded }
+    }
 }

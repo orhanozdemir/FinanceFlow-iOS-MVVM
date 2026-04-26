@@ -18,6 +18,10 @@ struct MainTabView: View {
                 .tabItem {
                     Label("İşlemler", systemImage: "list.bullet")
                 }
+            BudgetListView()
+                .tabItem {
+                    Label("Bütçeler", systemImage: "wallet.pass.fill")
+                }
         }
     }
 }
