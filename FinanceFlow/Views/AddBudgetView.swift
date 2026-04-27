@@ -12,6 +12,9 @@ struct AddBudgetView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     
+    @Query(sort: \Budget.monthDate, order: .reverse)
+    private var budgets: [Budget]
+    
     @StateObject private var viewModel = AddBudgetViewModel()
     @State private var errorMessage: String?
     
@@ -70,6 +73,9 @@ struct AddBudgetView: View {
     
     private func saveBudget() {
         do {
+            if viewModel.hasDuplicateBudget(in: budgets) {
+                throw AddBudgetError.duplicateBudget
+            }
             let budget = try viewModel.makeBudget()
             modelContext.insert(budget)
             try modelContext.save()

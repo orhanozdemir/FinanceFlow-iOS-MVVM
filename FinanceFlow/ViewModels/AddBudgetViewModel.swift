@@ -40,4 +40,13 @@ final class AddBudgetViewModel: ObservableObject {
             monthDate: monthDate.startOfMonth
         )
     }
+    
+    func hasDuplicateBudget(in budgets: [Budget]) -> Bool {
+        let calendar = Calendar.current
+        
+        return budgets.contains { budget in
+            budget.category == category &&
+            calendar.isDate(budget.monthDate, equalTo: monthDate.startOfMonth, toGranularity: .month)
+        }
+    }
 }
