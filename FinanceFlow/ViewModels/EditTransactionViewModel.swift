@@ -14,6 +14,7 @@ final class EditTransactionViewModel: ObservableObject {
     @Published var date: Date
     @Published var type: TransactionType
     @Published var category: TransactionCategory
+    @Published var hasAttemptedSubmit: Bool = false
     
     private let originalTransaction: Transaction
     
@@ -35,6 +36,36 @@ final class EditTransactionViewModel: ObservableObject {
         parsedAmount != nil &&
         (parsedAmount ?? 0) > 0 &&
         category.supportedType == type
+    }
+    
+    var titleValidationMessage: String? {
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmedTitle.isEmpty ? "Başlık alanı boş bırakılamaz." : nil
+    }
+    
+    var amountValidationMessage: String? {
+        if amountText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return "Tutar alanı boş bırakılamaz."
+        }
+        
+        guard let amount = parsedAmount else {
+            return "Tutar sayısal bir değer olmalıdır."
+        }
+        
+        if amount <= 0 {
+            return "Tutar 0'dan büyük olmalıdır."
+        }
+        
+        return nil
+    }
+    
+    var categoryValidationMessage: String? {
+        category.supportedType == type ? nil : "Kategori işlem türüyle uyumlu değil."
+    }
+    
+    var firstValidationMessage: String? {
+        guard hasAttemptedSubmit else { return nil }
+        return titleValidationMessage ?? amountValidationMessage ?? categoryValidationMessage
     }
     
     private var parsedAmount: Double? {

@@ -12,6 +12,7 @@ final class EditBudgetViewModel: ObservableObject {
     @Published var category: TransactionCategory
     @Published var limitText: String
     @Published var monthDate: Date
+    @Published var hasAttemptedSubmit: Bool = false
     
     private let originalBudget: Budget
     
@@ -24,6 +25,27 @@ final class EditBudgetViewModel: ObservableObject {
     
     var isFormValid: Bool {
         parsedLimit != nil && (parsedLimit ?? 0) > 0
+    }
+    
+    var limitValidationMessage: String? {
+        if limitText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return "Limit alanı boş bırakılamaz."
+        }
+        
+        guard let limit = parsedLimit else {
+            return "Limit sayısal bir değer olmalıdır."
+        }
+        
+        if limit <= 0 {
+            return "Limit 0'dan büyük olmalıdır."
+        }
+        
+        return nil
+    }
+    
+    var firstValidationMessage: String? {
+        guard hasAttemptedSubmit else { return nil }
+        return limitValidationMessage
     }
     
     private var parsedLimit: Double? {

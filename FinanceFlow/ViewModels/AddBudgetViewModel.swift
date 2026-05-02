@@ -12,6 +12,7 @@ final class AddBudgetViewModel: ObservableObject {
     @Published var category: TransactionCategory = .food
     @Published var limitText: String = ""
     @Published var monthDate: Date = .now
+    @Published var hasAttemptedSubmit: Bool = false
     
     var expenseCategories: [TransactionCategory] {
         TransactionCategory.allCases.filter { $0.supportedType == .expense }
@@ -19,6 +20,27 @@ final class AddBudgetViewModel: ObservableObject {
     
     var isFormValid: Bool {
         parsedLimit != nil && (parsedLimit ?? 0) > 0
+    }
+    
+    var limitValidationMessage: String? {
+        if limitText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return "Limit alanı boş bırakılamaz."
+        }
+        
+        guard let limit = parsedLimit else {
+            return "Limit sayısal bir değer olmalıdır."
+        }
+        
+        if limit <= 0 {
+            return "Limit 0'dan büyük olmalıdır."
+        }
+        
+        return nil
+    }
+    
+    var firstValidationMessage: String? {
+        guard hasAttemptedSubmit else { return nil }
+        return limitValidationMessage
     }
     
     private var parsedLimit: Double? {

@@ -44,6 +44,10 @@ struct EditTransactionView: View {
                     }
                     
                     DatePicker("Tarih", selection: $viewModel.date, displayedComponents: .date)
+                    
+                    if let message = viewModel.firstValidationMessage {
+                        ValidationMessageView(message: message)
+                    }
                 } header: {
                     FormSectionHeaderView(
                         "İşlem Bilgileri",
@@ -64,7 +68,7 @@ struct EditTransactionView: View {
                     Button("Güncelle") {
                         saveChanges()
                     }
-                    .disabled(!viewModel.isFormValid)
+//                    .disabled(!viewModel.isFormValid)
                 }
             }
             .errorAlert(title: "İşlem Kaydedilemedi", message: $errorMessage)
@@ -72,6 +76,8 @@ struct EditTransactionView: View {
     }
     
     private func saveChanges() {
+        viewModel.hasAttemptedSubmit = true
+        
         do {
             try viewModel.updateTransaction()
             try modelContext.save()

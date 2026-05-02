@@ -35,6 +35,10 @@ struct AddBudgetView: View {
                         selection: $viewModel.monthDate,
                         displayedComponents: .date
                     )
+                    
+                    if let message = viewModel.firstValidationMessage {
+                        ValidationMessageView(message: message)
+                    }
                 } header: {
                     FormSectionHeaderView(
                         "Bütçe Bilgileri",
@@ -55,7 +59,7 @@ struct AddBudgetView: View {
                     Button("Ekle") {
                         saveBudget()
                     }
-                    .disabled(!viewModel.isFormValid)
+//                    .disabled(!viewModel.isFormValid)
                 }
             }
             .errorAlert(title: "Bütçe Kaydedilemedi", message: $errorMessage)
@@ -63,6 +67,8 @@ struct AddBudgetView: View {
     }
     
     private func saveBudget() {
+        viewModel.hasAttemptedSubmit = true
+        
         do {
             if viewModel.hasDuplicateBudget(in: budgets) {
                 throw AddBudgetError.duplicateBudget
