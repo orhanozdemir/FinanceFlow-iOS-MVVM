@@ -18,6 +18,7 @@ struct BudgetListView: View {
     private var transactions: [Transaction]
     
     @State private var isPresentingAddSheet = false
+    @State private var selectedBudget: Budget?
     
     private let viewModel = BudgetListViewModel()
     
@@ -35,7 +36,15 @@ struct BudgetListView: View {
                         VStack(spacing: 12) {
                             ForEach(budgetStatuses) { status in
                                 BudgetRowView(status: status)
+                                    .onTapGesture {
+                                        selectedBudget = status.budget
+                                    }
                                     .contextMenu {
+                                        Button {
+                                            selectedBudget = status.budget
+                                        } label: {
+                                            Label("Düzenle", systemImage: "pencil")
+                                        }
                                         Button(role: .destructive) {
                                             delete(status.budget)
                                         } label: {
@@ -60,6 +69,9 @@ struct BudgetListView: View {
             }
             .sheet(isPresented: $isPresentingAddSheet) {
                 AddBudgetView()
+            }
+            .sheet(item: $selectedBudget) { budget in
+                EditBudgetView(budget: budget)
             }
         }
     }
