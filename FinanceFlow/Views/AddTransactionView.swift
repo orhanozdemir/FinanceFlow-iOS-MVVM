@@ -18,11 +18,11 @@ struct AddTransactionView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("İşlem Bilgileri") {
+                Section {
                     TextField("Başlık", text: $viewModel.title)
+                        .textInputAutocapitalization(.words)
                     
-                    TextField("Tutar", text: $viewModel.amountText)
-                        .keyboardType(.decimalPad)
+                    AmountTextField(title: "Tutar", text: $viewModel.amountText)
                     
                     Picker("Tür", selection: $viewModel.type) {
                         ForEach(TransactionType.allCases, id: \.self) { type in
@@ -40,6 +40,11 @@ struct AddTransactionView: View {
                     }
                     
                     DatePicker("Tarih", selection: $viewModel.date, displayedComponents: .date)
+                } header: {
+                    FormSectionHeaderView(
+                        "İşlem Bilgileri",
+                        subtitle: "Gelir veya gider kaydını buradan oluştur."
+                    )
                 }
             }
             .navigationTitle("Yeni İşlem")
@@ -52,13 +57,13 @@ struct AddTransactionView: View {
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Kaydet") {
+                    Button("Ekle") {
                         saveTransaction()
                     }
                     .disabled(!viewModel.isFormValid)
                 }
             }
-            .alert("Hata", isPresented: Binding(
+            .alert("İşlem Kaydedilemedi", isPresented: Binding(
                 get: { errorMessage != nil},
                 set: { newValue in
                     if !newValue {

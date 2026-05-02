@@ -25,20 +25,24 @@ struct EditBudgetView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Bütçe Bilgileri") {
+                Section {
                     Picker("Kategori", selection: $viewModel.category) {
                         ForEach(expenseCategories, id: \.self) { category in
                             Text(category.displayName).tag(category)
                         }
                     }
                     
-                    TextField("Limit", text: $viewModel.limitText)
-                        .keyboardType(.decimalPad)
+                    AmountTextField(title: "Limit", text: $viewModel.limitText)
                     
                     DatePicker(
                         "Ay",
                         selection: $viewModel.monthDate,
                         displayedComponents: .date
+                    )
+                } header: {
+                    FormSectionHeaderView(
+                        "Bütçe Bilgileri",
+                        subtitle: "Kategori limitini ve dönemini güncelle."
                     )
                 }
             }
@@ -52,13 +56,13 @@ struct EditBudgetView: View {
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Kaydet") {
+                    Button("Güncelle") {
                         saveChanges()
                     }
                     .disabled(!viewModel.isFormValid)
                 }
             }
-            .alert("Hata", isPresented: Binding(
+            .alert("Bütçe Kaydedilemedi", isPresented: Binding(
                 get: { errorMessage != nil },
                 set: { newValue in
                     if !newValue {
