@@ -33,7 +33,7 @@ struct BudgetListView: View {
                     )
                 } else {
                     ScrollView {
-                        VStack(spacing: 12) {
+                        VStack(spacing: AppSpacing.md) {
                             ForEach(budgetStatuses) { status in
                                 BudgetRowView(status: status)
                                     .onTapGesture {
@@ -54,6 +54,7 @@ struct BudgetListView: View {
                             }
                         }
                         .padding()
+                        .animation(.easeInOut(duration: 0.2), value: budgetStatuses.count)
                     }
                 }
             }
@@ -81,12 +82,16 @@ struct BudgetListView: View {
     }
     
     private func delete(_ budget: Budget) {
-        modelContext.delete(budget)
-        
-        do {
-            try modelContext.save()
-        } catch {
-            print("Bütçe silinirken hata oluştu: \(error)")
+        withAnimation(.easeInOut(duration: 0.2)) {
+            modelContext.delete(budget)
+            
+            do {
+                try modelContext.save()
+                HapticService.success()
+            } catch {
+                HapticService.warning()
+                print("Bütçe silinirken hata oluştu: \(error)")
+            }
         }
     }
 }

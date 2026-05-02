@@ -63,20 +63,7 @@ struct AddTransactionView: View {
                     .disabled(!viewModel.isFormValid)
                 }
             }
-            .alert("İşlem Kaydedilemedi", isPresented: Binding(
-                get: { errorMessage != nil},
-                set: { newValue in
-                    if !newValue {
-                        errorMessage = nil
-                    }
-                }
-            )) {
-                Button("Tamam", role: .cancel) {
-                    errorMessage = nil
-                }
-            } message: {
-                Text(errorMessage ?? "Bilinmeyen bir hata oluştu.")
-            }
+            .errorAlert(title: "İşlem Kaydedilemedi", message: $errorMessage)
         }
     }
     
@@ -85,8 +72,10 @@ struct AddTransactionView: View {
             let transaction = try viewModel.makeTransaction()
             modelContext.insert(transaction)
             try modelContext.save()
+            HapticService.success()
             dismiss()
         } catch {
+            HapticService.warning()
             print("Kayıt sırasında hata oluştu: \(error)")
         }
     }

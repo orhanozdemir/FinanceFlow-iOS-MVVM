@@ -29,6 +29,7 @@ struct TransactionListView: View {
                         systemImage: "tray",
                         message: "Sağ üstteki artı butonuyla ilk işlemini ekleyebilirsin."
                     )
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
                 } else {
                     VStack(spacing: 16) {
                         summarySection
@@ -37,8 +38,10 @@ struct TransactionListView: View {
                     }
                     .padding(.horizontal)
                     .padding(.top, 8)
+                    .transition(.opacity)
                 }
             }
+            .animation(.easeInOut(duration: 0.25), value: transactions.isEmpty)
             .navigationTitle("İşlemler")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -114,6 +117,8 @@ struct TransactionListView: View {
             .onDelete(perform: deleteFromOffsets)
         }
         .listStyle(.plain)
+        .animation(.easeInOut(duration: 0.2), value: selectedFilter)
+        .animation(.easeInOut(duration: 0.2), value: filteredTransactions.count)
     }
     
     private var filteredTransactions: [Transaction] {
@@ -129,25 +134,33 @@ struct TransactionListView: View {
     }
     
     private func delete(_ transaction: Transaction) {
-        modelContext.delete(transaction)
-        
-        do {
-            try modelContext.save()
-        } catch {
-            print("Silme sırasında hata oluştu: \(error)")
+        withAnimation(.easeInOut(duration: 0.2)) {
+            modelContext.delete(transaction)
+            
+            do {
+                try modelContext.save()
+                HapticService.success()
+            } catch {
+                HapticService.warning()
+                print("Silme sırasında hata oluştu: \(error)")
+            }
         }
     }
     
     private func deleteFromOffsets(_ offsets: IndexSet) {
-        for index in offsets {
-            let transaction = filteredTransactions[index]
-            modelContext.delete(transaction)
-        }
-        
-        do {
-            try modelContext.save()
-        } catch {
-            print("Toplu silme sırasında hata oluştu: \(error)")
+        withAnimation(.easeInOut(duration: 0.2)) {
+            for index in offsets {
+                let transaction = filteredTransactions[index]
+                modelContext.delete(transaction)
+            }
+            
+            do {
+                try modelContext.save()
+                HapticService.success()
+            } catch {
+                HapticService.warning()
+                print("Toplu silme sırasında hata oluştu: \(error)")
+            }
         }
     }
 }

@@ -62,20 +62,7 @@ struct EditBudgetView: View {
                     .disabled(!viewModel.isFormValid)
                 }
             }
-            .alert("Bütçe Kaydedilemedi", isPresented: Binding(
-                get: { errorMessage != nil },
-                set: { newValue in
-                    if !newValue {
-                        errorMessage = nil
-                    }
-                }
-            )) {
-                Button("Tamam", role: .cancel) {
-                    errorMessage = nil
-                }
-            } message: {
-                Text(errorMessage ?? "Bilinmeyen bir hata oluştu.")
-            }
+            .errorAlert(title: "Bütçe Kaydedilemedi", message: $errorMessage)
         }
     }
     
@@ -91,8 +78,10 @@ struct EditBudgetView: View {
             
             try viewModel.updateBudget()
             try modelContext.save()
+            HapticService.success()
             dismiss()
         } catch {
+            HapticService.warning()
             errorMessage = error.localizedDescription
         }
     }
