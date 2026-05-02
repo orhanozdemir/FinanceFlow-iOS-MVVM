@@ -30,7 +30,7 @@ struct BudgetRowView: View {
                     Text("Harcanan")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Text("₺\(status.spentAmount, default: "%.2f")")
+                    Text(CurrencyFormatter.format(status.spentAmount))
                         .font(.subheadline.bold())
                 }
                 
@@ -40,7 +40,7 @@ struct BudgetRowView: View {
                     Text("Limit")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Text("₺\(status.budget.monthlyLimit, default: "%.2f")")
+                    Text(CurrencyFormatter.format(status.budget.monthlyLimit))
                         .font(.subheadline.bold())
                 }
                 
@@ -50,7 +50,7 @@ struct BudgetRowView: View {
                     Text("Kalan")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Text("₺\(status.remainingAmount, default: "%.2f")")
+                    Text(CurrencyFormatter.format(status.remainingAmount))
                         .font(.subheadline.bold())
                         .foregroundStyle(status.remainingAmount < 0 ? .red : .green)
                 }

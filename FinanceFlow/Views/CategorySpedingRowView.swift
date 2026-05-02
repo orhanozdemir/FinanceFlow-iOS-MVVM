@@ -17,7 +17,7 @@ struct CategorySpedingRowView: View {
             
             Spacer()
             
-            Text("₺\(summary.totalAmount, default: "%.2f")")
+            Text(CurrencyFormatter.format(summary.totalAmount))
                 .font(.headline)
                 .foregroundStyle(.red)
         }

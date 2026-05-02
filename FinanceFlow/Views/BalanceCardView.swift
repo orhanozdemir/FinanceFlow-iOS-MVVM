@@ -17,7 +17,7 @@ struct BalanceCardView: View {
                 .font(.headline)
                 .foregroundStyle(.secondary)
             
-            Text("₺\(amount, default: "%.2f")")
+            Text(CurrencyFormatter.format(amount))
                 .font(.largeTitle.bold())
                 .foregroundStyle(amount >= 0 ? .green : .red)
         }

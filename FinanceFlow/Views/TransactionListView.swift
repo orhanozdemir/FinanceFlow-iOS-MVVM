@@ -15,6 +15,7 @@ struct TransactionListView: View {
     private var transactions: [Transaction]
     
     @State private var isPresentingAddSheet = false
+    @State private var selectedTransaction: Transaction?
     @State private var selectedFilter: TransactionFilter = .all
     
     private let viewModel = TransactionListViewModel()
@@ -51,6 +52,9 @@ struct TransactionListView: View {
             .sheet(isPresented: $isPresentingAddSheet) {
                 AddTransactionView()
             }
+            .sheet(item: $selectedTransaction) { transaction in
+                EditTransactionView(transaction: transaction)
+            }
         }
     }
     
@@ -83,7 +87,23 @@ struct TransactionListView: View {
         List {
             ForEach(filteredTransactions) { transaction in
                 TransactionRowView(transaction: transaction)
+                    .onTapGesture {
+                        selectedTransaction = transaction
+                    }
                     .swipeActions {
+                        Button(role: .destructive) {
+                            delete(transaction)
+                        } label: {
+                            Label("Sil", systemImage: "trash")
+                        }
+                    }
+                    .contextMenu {
+                        Button {
+                            selectedTransaction = transaction
+                        } label: {
+                            Label("Düzenle", systemImage: "pencil")
+                        }
+                        
                         Button(role: .destructive) {
                             delete(transaction)
                         } label: {

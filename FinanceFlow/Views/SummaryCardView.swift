@@ -18,7 +18,7 @@ struct SummaryCardView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             
-            Text("₺\(amount, default: "%.2f")")
+            Text(CurrencyFormatter.format(amount))
                 .font(.title3.bold())
                 .foregroundStyle(color)
         }
