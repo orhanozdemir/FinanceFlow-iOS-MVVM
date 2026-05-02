@@ -24,10 +24,10 @@ struct TransactionListView: View {
         NavigationStack {
             Group {
                 if transactions.isEmpty {
-                    ContentUnavailableView(
-                        "Henüz işlem yok",
+                    EmptyStateView(
+                        title: "Henüz işlem yok",
                         systemImage: "tray",
-                        description: Text("Sağ üstteki artı butonuyla ilk işlemini ekleyebilirsin.")
+                        message: "Sağ üstteki artı butonuyla ilk işlemini ekleyebilirsin."
                     )
                 } else {
                     VStack(spacing: 16) {

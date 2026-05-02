@@ -13,18 +13,18 @@ struct SummaryCardView: View {
     let color: Color
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: AppSpacing.sm) {
             Text(title)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .font(.caption)
+                .foregroundStyle(AppColors.secondaryText)
             
             Text(CurrencyFormatter.format(amount))
-                .font(.title3.bold())
+                .font(.headline.bold())
                 .foregroundStyle(color)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(.thinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .appCard()
     }
 }

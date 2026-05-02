@@ -24,15 +24,16 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 16) {
+                VStack(spacing: AppSpacing.lg) {
                     balanceSection
                     monthlySummarySection
                     recentTransactionsSection
                     categorySpendingSection
                     budgetWarningSection
                 }
-                .padding()
+                .padding(AppSpacing.lg)
             }
+            .background(AppColors.pageBackground)
             .navigationTitle("Dashboard")
         }
     }
@@ -94,9 +95,7 @@ struct DashboardView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(.thinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .appCard()
     }
     
     private var categorySpendingSection: some View {
@@ -113,9 +112,7 @@ struct DashboardView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(.thinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .appCard()
     }
     
     private var budgetWarningSection: some View {
@@ -140,9 +137,7 @@ struct DashboardView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(.thinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .appCard()
     }
     
     private func emptySectionText(_ text: String) -> some View {

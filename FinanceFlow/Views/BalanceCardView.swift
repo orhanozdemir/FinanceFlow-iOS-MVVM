@@ -12,18 +12,18 @@ struct BalanceCardView: View {
     let amount: Double
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: AppSpacing.md) {
             Text(title)
-                .font(.headline)
-                .foregroundStyle(.secondary)
+                .font(.subheadline)
+                .foregroundStyle(AppColors.secondaryText)
             
             Text(CurrencyFormatter.format(amount))
                 .font(.largeTitle.bold())
-                .foregroundStyle(amount >= 0 ? .green : .red)
+                .foregroundStyle(amount >= 0 ? AppColors.income : AppColors.expense)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(.thinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .appCard()
     }
 }

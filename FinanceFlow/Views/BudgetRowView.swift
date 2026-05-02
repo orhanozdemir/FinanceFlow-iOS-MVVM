@@ -11,53 +11,47 @@ struct BudgetRowView: View {
     let status: BudgetStatus
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: AppSpacing.md) {
             HStack {
-                Text(status.budget.category.displayName)
-                    .font(.headline)
+                VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                    Text(status.budget.category.displayName)
+                        .font(.headline)
+                    
+                    Text(status.isExceeded ? "Limit aşıldı" : "Limit içinde")
+                        .font(.caption)
+                        .foregroundStyle(status.isExceeded ? AppColors.expense : AppColors.income)
+                }
                 
                 Spacer()
                 
-                Text(status.isExceeded ? "Aşıldı" : "Uygun")
-                    .font(.caption)
-                    .foregroundStyle(status.isExceeded ? .red : .green)
+                Text("\(Int(status.progress * 100))%")
+                    .font(.caption.bold())
+                    .foregroundStyle(status.isExceeded ? AppColors.expense : AppColors.income)
             }
             
             ProgressView(value: min(status.progress, 1.0))
+                .tint(status.isExceeded ? AppColors.expense : AppColors.income)
             
             HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Harcanan")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Text(CurrencyFormatter.format(status.spentAmount))
-                        .font(.subheadline.bold())
-                }
-                
+                budgetInfo(title: "Harcanan", value: status.spentAmount)
                 Spacer()
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Limit")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Text(CurrencyFormatter.format(status.budget.monthlyLimit))
-                        .font(.subheadline.bold())
-                }
-                
+                budgetInfo(title: "Limit", value: status.budget.monthlyLimit)
                 Spacer()
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Kalan")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Text(CurrencyFormatter.format(status.remainingAmount))
-                        .font(.subheadline.bold())
-                        .foregroundStyle(status.remainingAmount < 0 ? .red : .green)
-                }
+                budgetInfo(title: "Kalan", value: status.remainingAmount)
             }
         }
-        .padding()
-        .background(.thinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 18))
+        .appCard()
+    }
+    
+    private func budgetInfo(title: String, value: Double) -> some View {
+        VStack(alignment: .leading, spacing: AppSpacing.xs) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(AppColors.secondaryText)
+            
+            Text(CurrencyFormatter.format(value))
+                .font(.caption.bold())
+                .foregroundStyle(value < 0 ? AppColors.expense : AppColors.income)
+        }
     }
 }

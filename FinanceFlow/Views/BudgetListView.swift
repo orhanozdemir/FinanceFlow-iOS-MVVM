@@ -26,10 +26,10 @@ struct BudgetListView: View {
         NavigationStack {
             Group {
                 if budgetStatuses.isEmpty {
-                    ContentUnavailableView(
-                        "Bu ay için bütçe yok",
+                    EmptyStateView(
+                        title: "Bu ay için bütçe yok",
                         systemImage: "creditcard",
-                        description: Text("Sağ üstteki artı butonuyla ilk bütçeni ekleyebilirsin")
+                        message: "Sağ üstteki artı butonuyla ilk bütçeni ekleyebilirsin"
                     )
                 } else {
                     ScrollView {
