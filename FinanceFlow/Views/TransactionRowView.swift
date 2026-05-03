@@ -51,7 +51,7 @@ struct TransactionRowView: View {
     
     private var formattedAmount: String {
         let sign = transaction.type == .income ? "+" : ""
-        return "\(sign)₺\(transaction.amount, default:"%.2f")"
+        return "\(sign)₺\(CurrencyFormatter.format(transaction.amount))"
     }
     
     private var categoryIcon: some View {
