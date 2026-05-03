@@ -1,0 +1,64 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+*.xcworkspace
+!default.xcworkspace
+xcuserdata/
+*.xcuserstate
+
+# Swift Package Manager
+.build/
+Packages/
+Package.resolved
+
+# CocoaPods (kullanmıyorsan bile sorun değil)
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# Logs
+*.log
+
+# Temp files
+*.tmp
+*.temp
+
+# Archives
+*.xcarchive
+
+# iOS Simulator
+*.simruntime
+
+# SwiftData / CoreData store (lokal veriler)
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# App data (önemli!)
+Documents/
+Library/
+tmp/
+
+# Firebase / config (ileride kullanırsan)
+GoogleService-Info.plist
+
+# Environment files
+.env
+
+# Screenshots hariç tutma
+# (bunları commit edeceğiz)
+!screenshots/
+
+# Keep README
+!README.md
