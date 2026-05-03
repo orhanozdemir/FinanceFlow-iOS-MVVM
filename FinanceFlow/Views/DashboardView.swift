@@ -27,6 +27,7 @@ struct DashboardView: View {
                 VStack(spacing: AppSpacing.lg) {
                     balanceSection
                     monthlySummarySection
+                    insightsSection
                     recentTransactionsSection
                     categorySpendingSection
                     budgetWarningSection
@@ -56,6 +57,10 @@ struct DashboardView: View {
     
     private var categorySummaries: [CategorySpendingSummary] {
         viewModel.categorySpendingSummaries(from: transactions)
+    }
+    
+    private var insights: [DashboardInsight] {
+        viewModel.dashboardInsights(from: transactions)
     }
     
     private var balanceSection: some View {
@@ -138,6 +143,22 @@ struct DashboardView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .appCard()
+    }
+    
+    private var insightsSection: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.md) {
+            Text("Finansal İçgörüler")
+                .font(.headline)
+            
+            if insights.isEmpty {
+                emptySectionText("Henüz içgörü oluşturmak için yeterli veri yok.")
+            } else {
+                ForEach(insights) { insight in
+                    DashboardInsightCardView(insight: insight)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private func emptySectionText(_ text: String) -> some View {

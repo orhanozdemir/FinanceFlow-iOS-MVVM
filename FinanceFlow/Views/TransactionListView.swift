@@ -18,6 +18,10 @@ struct TransactionListView: View {
     @State private var selectedTransaction: Transaction?
     @State private var selectedFilter: TransactionFilter = .all
     
+    @State private var searchText: String = ""
+    @State private var selectedDateRange: DateRangeFilter = .all
+    @State private var selectedSort: TransactionSortOption = .dateDescending
+    
     private let viewModel = TransactionListViewModel()
     
     var body: some View {
@@ -34,7 +38,20 @@ struct TransactionListView: View {
                     VStack(spacing: 16) {
                         summarySection
                         filterSection
-                        transactionList
+                        dateFilterSection
+                        sortSection
+                        
+                        if filteredTransactions.isEmpty {
+                            EmptyStateView(
+                                title: "Sonuç bulunamadı",
+                                systemImage: "magnifyingglass",
+                                message: "Arama veya filtre kriterlerini değiştirerek tekrar deneyebilirsin."
+                            )
+                            .transition(.opacity.combined(with: .scale(scale: 0.98)))
+                        } else {
+                            transactionList
+                                .transition(.opacity)
+                        }
                     }
                     .padding(.horizontal)
                     .padding(.top, 8)
@@ -59,6 +76,7 @@ struct TransactionListView: View {
                 EditTransactionView(transaction: transaction)
             }
         }
+        .searchable(text: $searchText, prompt: "İşlem ara")
     }
     
     private var summarySection: some View {
@@ -77,13 +95,30 @@ struct TransactionListView: View {
         }
     }
     
-    var filterSection: some View {
+    private var filterSection: some View {
         Picker("Filtre", selection: $selectedFilter) {
             ForEach(TransactionFilter.allCases, id: \.self) { filter in
                 Text(filter.displayName).tag(filter)
             }
         }
         .pickerStyle(.segmented)
+    }
+    
+    private var dateFilterSection: some View {
+        Picker("Tarih", selection: $selectedDateRange) {
+            Text("Tümü").tag(DateRangeFilter.all)
+            Text("Bu Ay").tag(DateRangeFilter.thisMonth)
+            Text("Son 30 Gün").tag(DateRangeFilter.last30Days)
+        }
+        .pickerStyle(.segmented)
+    }
+    
+    private var sortSection: some View {
+        Picker("Sıralama", selection: $selectedSort) {
+            ForEach(TransactionSortOption.allCases, id: \.self) { option in
+                Text(option.displayName).tag(option)
+            }
+        }
     }
     
     private var transactionList: some View {
@@ -108,7 +143,9 @@ struct TransactionListView: View {
                         }
                         
                         Button(role: .destructive) {
-                            delete(transaction)
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                delete(transaction)
+                            }
                         } label: {
                             Label("Sil", systemImage: "trash")
                         }
@@ -117,33 +154,39 @@ struct TransactionListView: View {
             .onDelete(perform: deleteFromOffsets)
         }
         .listStyle(.plain)
-        .animation(.easeInOut(duration: 0.2), value: selectedFilter)
         .animation(.easeInOut(duration: 0.2), value: filteredTransactions.count)
+        .animation(.easeInOut(duration: 0.2), value: selectedFilter)
+        .animation(.easeInOut, value: selectedDateRange)
+        .animation(.easeInOut, value: selectedSort)
     }
     
     private var filteredTransactions: [Transaction] {
-        viewModel.filteredTransactions(from: transactions, filter: selectedFilter)
+        viewModel.filteredTransactions(
+            from: transactions,
+            filter: selectedFilter,
+            searchText: searchText,
+            dateRange: selectedDateRange,
+            sort: selectedSort
+        )
     }
     
     private var totalIncome: Double {
-        viewModel.totalIncome(from: transactions)
+        viewModel.totalIncome(from: filteredTransactions)
     }
     
     private var totalExpense: Double {
-        viewModel.totalExpense(from: transactions)
+        viewModel.totalExpense(from: filteredTransactions)
     }
     
     private func delete(_ transaction: Transaction) {
-        withAnimation(.easeInOut(duration: 0.2)) {
-            modelContext.delete(transaction)
-            
-            do {
-                try modelContext.save()
-                HapticService.success()
-            } catch {
-                HapticService.warning()
-                print("Silme sırasında hata oluştu: \(error)")
-            }
+        modelContext.delete(transaction)
+        
+        do {
+            try modelContext.save()
+            HapticService.success()
+        } catch {
+            HapticService.warning()
+            print("Silme sırasında hata oluştu: \(error)")
         }
     }
     
