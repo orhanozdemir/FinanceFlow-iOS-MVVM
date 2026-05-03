@@ -21,12 +21,15 @@ struct DashboardView: View {
     
     private let viewModel = DashboardViewModel()
     
+    @StateObject private var aiViewModel = AIInsightsViewModel()
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: AppSpacing.lg) {
                     balanceSection
                     monthlySummarySection
+                    aiInsightsSection
                     insightsSection
                     recentTransactionsSection
                     categorySpendingSection
@@ -159,6 +162,50 @@ struct DashboardView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var aiInsightsSection: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.md) {
+            HStack {
+                Text("AI Finans Yorumu")
+                    .font(.headline)
+                
+                Spacer()
+                
+                Button {
+                    Task {
+                        await aiViewModel.generateInsights(
+                            transactions: transactions,
+                            budgets: budgets
+                        )
+                    }
+                } label: {
+                    if aiViewModel.isLoading {
+                        ProgressView()
+                    } else {
+                        Image(systemName: "sparkles")
+                    }
+                }
+                .disabled(aiViewModel.isLoading)
+            }
+            
+            if aiViewModel.insights.isEmpty && !aiViewModel.isLoading {
+                Text("Finansal verilerine göre yorum oluşturmak için sparkles butonuna bas.")
+                    .font(.caption)
+                    .foregroundStyle(AppColors.secondaryText)
+            } else {
+                ForEach(aiViewModel.insights) { insight in
+                    AIInsightCardView(insight: insight)
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .animation(.easeInOut(duration: 0.25), value: aiViewModel.insights.count)
+        .errorAlert(
+            title: "AI Yorumu Oluşturulamadı",
+            message: $aiViewModel.errorMessage
+        )
     }
     
     private func emptySectionText(_ text: String) -> some View {
