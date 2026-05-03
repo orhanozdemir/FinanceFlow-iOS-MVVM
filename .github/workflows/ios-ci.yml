@@ -29,5 +29,6 @@ jobs:
           xcodebuild test \
             -project FinanceFlow.xcodeproj \
             -scheme FinanceFlow \
-            -destination 'id=4CAE0F50-248B-4738-A684-2B454F8B1323' \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6' \
             -enableCodeCoverage YES
