@@ -43,7 +43,8 @@ struct TransactionListViewModelTests {
     func filteredTransactionsReturnsAllForAllFilter() {
         let transactions = sampleTransactions()
         
-        let result = viewModel.filteredTransactions(from: transactions, filter: .all)
+        let result = viewModel.filteredTransactions(from: transactions, filter: .all, searchText: "", dateRange: .all, sort: .amountAscending)
+//        let result = viewModel.filteredTransactions(from: transactions, filter: .all)
         
         #expect(result.count == 3)
     }
@@ -52,7 +53,8 @@ struct TransactionListViewModelTests {
     func filteredTransactionsReturnsOnlyExpenseForExpenseFilter() {
         let transactions = sampleTransactions()
         
-        let result = viewModel.filteredTransactions(from: transactions, filter: .expense)
+        let result = viewModel.filteredTransactions(from: transactions, filter: .expense, searchText: "", dateRange: .all, sort: .amountAscending)
+//        let result = viewModel.filteredTransactions(from: transactions, filter: .expense)
         
         #expect(result.count == 2)
     }
