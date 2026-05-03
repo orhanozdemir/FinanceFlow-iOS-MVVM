@@ -1,9 +1,6 @@
 name: iOS CI
 
 on:
-  tag:
-    branches:
-      - main
   push:
     branches:
       - main
@@ -31,5 +28,5 @@ jobs:
           xcodebuild test \
             -project FinanceFlow.xcodeproj \
             -scheme FinanceFlow \
-            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             -enableCodeCoverage YES
