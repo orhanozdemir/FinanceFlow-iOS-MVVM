@@ -2,15 +2,12 @@ name: iOS CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build-and-test:
-    name: Build and Test
     runs-on: macos-15
 
     steps:
@@ -20,8 +17,8 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
-      - name: Show available schemes
-        run: xcodebuild -list -project FinanceFlow.xcodeproj
+      - name: List simulators
+        run: xcrun simctl list devices available
 
       - name: Build and test
         run: |
