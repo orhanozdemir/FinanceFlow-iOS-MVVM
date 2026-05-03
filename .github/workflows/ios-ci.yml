@@ -19,11 +19,11 @@ jobs:
 
       - name: List simulators
         run: xcrun simctl list devices available
-
-      - name: Build and test
+        
+        - name: Build and test
           run: |
             xcodebuild test \
               -project FinanceFlow.xcodeproj \
               -scheme FinanceFlow \
-              -destination 'id=61AE1FC1-A43D-439B-92B0-FAB4CE70C7CE' \
+              -destination 'id=4CAE0F50-248B-4738-A684-2B454F8B1323' \
               -enableCodeCoverage YES
