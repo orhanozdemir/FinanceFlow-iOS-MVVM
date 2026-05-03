@@ -21,9 +21,9 @@ jobs:
         run: xcrun simctl list devices available
 
       - name: Build and test
-        run: |
-          xcodebuild test \
-            -project FinanceFlow.xcodeproj \
-            -scheme FinanceFlow \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-            -enableCodeCoverage YES
+          run: |
+            xcodebuild test \
+              -project FinanceFlow.xcodeproj \
+              -scheme FinanceFlow \
+              -destination 'id=61AE1FC1-A43D-439B-92B0-FAB4CE70C7CE' \
+              -enableCodeCoverage YES
